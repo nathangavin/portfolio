@@ -28,15 +28,44 @@ pub fn App(cx: Scope) -> impl IntoView {
     }
 }
 
+#[component]
+fn Header(cx: Scope, title: String) -> impl IntoView {
+
+    view! {cx,
+        <div id="header">
+            <div id="header_logo">
+                <a href="/">"NATHANS SITE"</a>
+            </div>
+            <div id="header_title">
+                <h3>{title}</h3>
+            </div>
+        </div> 
+    }
+}
+
+#[component]
+fn Button(cx: Scope) -> impl IntoView {
+    view! {
+        cx,
+        <button>
+            "Test"
+        </button>
+    }
+}
+
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
     // Creates a reactive value to update the button
     let (count, set_count) = create_signal(cx, 0);
     let on_click = move |_| set_count.update(|count| *count += 1);
-
+    let title = String::from("Main Page");
     view! { cx,
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <div>
+            <Header title={title}/>
+            <h1>"Welcome to Leptos!"</h1>
+            <button on:click=on_click>"Click Me: " {count}</button>
+        </div>
     }
 }
+
